@@ -30,17 +30,17 @@
 #        - 8081
 #        - https
 
-- name: Install MySQL and start service
+- name: Install mariadb and start service
   hosts: qb_rhel
   gather_facts: false
   tasks: 
-    - name: Install MySQL
+    - name: Install mariadb-server
       yum: 
-        name: mysql-server
+        name: mariadb-server
         state: latest
-    - name: Start MySQL service
+    - name: Start mariadb service
       systemd: 
-        name: mysqld
+        name: mariadb
         state: started
         enabled: yes
 ...
