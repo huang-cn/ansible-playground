@@ -1,13 +1,13 @@
 ---
 - name: update
-  hosts: all
+  hosts: qb_rhel
   gather_facts: false
   tasks:
   - name: Update
     command: "yum -y update"
 
 - name: Install Apache on web and start service
-  hosts: all
+  hosts: qb_rhel
   gather_facts: false
   tasks: 
     - name: Install Apache
@@ -31,7 +31,7 @@
 #        - https
 
 - name: Install MySQL and start service
-  hosts: all
+  hosts: qb_rhel
   gather_facts: false
   tasks: 
     - name: Install MySQL
