@@ -1,6 +1,6 @@
 ---
 - name: clear env
-  hosts: qb_host
+  hosts: qb_rhel
   gather_facts: false
   tasks:
   - name: stop mysql
