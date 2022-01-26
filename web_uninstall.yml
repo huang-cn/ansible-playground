@@ -3,10 +3,10 @@
   hosts: qb_rhel
   gather_facts: false
   tasks:
-  - name: stop mysql
-    command: "systemctl stop mysqld"
-  - name: uninstall mysql
-    command: "yum -y erase mysql"
+  - name: stop mariadb
+    command: "systemctl stop mariadb"
+  - name: uninstall mariadb
+    command: "yum -y erase mariadb-server"
   - name: stop apache
     command: "systemctl stop httpd"
   - name: uninstall apache
