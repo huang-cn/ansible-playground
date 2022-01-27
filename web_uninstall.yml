@@ -1,6 +1,6 @@
 ---
 - name: clear env
-  hosts: qb_rhel
+  hosts: qb_group2
   gather_facts: false
   tasks:
   - name: stop mariadb
