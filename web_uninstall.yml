@@ -1,14 +1,10 @@
 ---
 - name: clear env
-  hosts: qb_group2
+  hosts: qb_group3
   gather_facts: false
   tasks:
-  - name: stop mariadb
-    command: "systemctl stop mariadb"
   - name: uninstall mariadb
     command: "yum -y erase mariadb-server"
-  - name: stop apache
-    command: "systemctl stop httpd"
   - name: uninstall apache
     command: "yum -y erase httpd"
 ...
