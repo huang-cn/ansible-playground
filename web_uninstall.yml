@@ -1,6 +1,6 @@
 ---
 - name: clear env
-  hosts: qb_group3
+  hosts: apache_mysql
   gather_facts: false
   tasks:
   - name: uninstall mariadb
