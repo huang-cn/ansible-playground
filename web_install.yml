@@ -1,13 +1,13 @@
 ---
 - name: update
-  hosts: qb_group3
+  hosts: apache_mysql
   gather_facts: false
   tasks:
   - name: Update
     command: "yum -y update"
 
 - name: Install Apache on web and start service
-  hosts: qb_group3
+  hosts: apache_mysql
   gather_facts: false
   tasks: 
     - name: Install Apache
@@ -31,7 +31,7 @@
 #        - https
 
 - name: Install mariadb and start service
-  hosts: qb_group3
+  hosts: apache_mysql
   gather_facts: false
   tasks: 
     - name: Install mariadb-server
