@@ -1,8 +1,12 @@
-- name: Install Nginx from galaxy collection
+- name: update
   hosts: nginx_group
+  gather_facts: false
   tasks:
   - name: Update
-    command: "yum -y update"  
+    command: "yum -y update"
+
+- name: Install Nginx from galaxy collection
+  hosts: nginx_group
   become: true
   roles:
     - nginxinc.nginx_core.nginx
