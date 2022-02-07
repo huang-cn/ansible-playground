@@ -11,4 +11,9 @@
   roles:
     - nginxinc.nginx_core.nginx
     
-    
+- name: update welcome page
+  hosts: nginx_group
+  gather_facts: false
+  tasks:
+  - name: Update welcome page
+    command: "sed -i 's/Welcome to nginx!/Welcome to nginx installed from Ansible Galaxy Collection!/g' /usr/share/nginx/html/index.html"    
