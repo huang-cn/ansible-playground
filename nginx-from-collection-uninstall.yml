@@ -1,0 +1,6 @@
+- name: uninstall nginx
+  hosts: nginx_group
+  gather_facts: false
+  tasks:
+  - name: uninstall
+    command: "yum -y erase nginx"
