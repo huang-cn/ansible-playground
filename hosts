@@ -1,11 +1,8 @@
 [qb_host]
 api.cherty.cp.fyre.ibm.com
 
-[qb_rhel]
-recouple1.fyre.ibm.com
+[apache_mysql]
+thermic1.fyre.ibm.com
 
-[qb_group2]
-consul1.fyre.ibm.com
-
-[all]
-api.cherty.cp.fyre.ibm.com
+[nginx_group]
+thermic1.fyre.ibm.com
