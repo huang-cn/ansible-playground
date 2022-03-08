@@ -19,7 +19,7 @@
           dumpFile = AdminControl.invoke(serverJvm, 'generateHeapDump')
           print 'Heap dump file: ' + dumpFile
           EOF
-          {{ WSPATH }}/wsadmin.sh -lang jython \
+          /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/wsadmin.sh -lang jython \
             -user {{ WSADMIN }} \
             -password {{ WSPASS }} \
             -f /tmp/genHeapdump.py \
