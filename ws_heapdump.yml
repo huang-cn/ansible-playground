@@ -1,0 +1,30 @@
+---
+- hosts: ws_host
+  vars:
+    - WSADMIN: admin
+    - WSPATH: /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin
+    ## Set WSPASS in job template.
+ 
+- name: Websphere Heap Dump 
+  hosts: ws_host
+  gather_facts: no
+  tasks:
+    - name: perform heapdump 
+      shell:
+        cmd: |
+          cat > /tmp/genHeapdump.py << EOF
+          serverJvm = AdminControl.queryNames('WebSphere:type=JVM,*')
+          print 'Generating dump for server: ' + serverJvm
+
+          dumpFile = AdminControl.invoke(serverJvm, 'generateHeapDump')
+          print 'Heap dump file: ' + dumpFile
+          EOF
+          ${WSPATH}/wsadmin.sh -lang jython \
+            -user ${WSADMIN} \
+            -password ${WSPASS} \
+            -f /tmp/genHeapdump.py \
+            -conntype SOAP \
+            -host inventory_hostname
+      args:
+        executable: /bin/bash
+
