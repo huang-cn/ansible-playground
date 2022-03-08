@@ -19,12 +19,12 @@
           dumpFile = AdminControl.invoke(serverJvm, 'generateHeapDump')
           print 'Heap dump file: ' + dumpFile
           EOF
-          ${WSPATH}/wsadmin.sh -lang jython \
-            -user ${WSADMIN} \
-            -password ${WSPASS} \
+          {{ WSPATH }}/wsadmin.sh -lang jython \
+            -user {{ WSADMIN }} \
+            -password {{ WSPASS }} \
             -f /tmp/genHeapdump.py \
             -conntype SOAP \
-            -host inventory_hostname
+            -host {{ inventory_hostname }}
       args:
         executable: /bin/bash
 
