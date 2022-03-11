@@ -61,4 +61,5 @@
       register: output
       args:
         executable: /bin/bash
-  msg: output.stdout
+        ansible.builtin.debug:
+          msg: output.stdout
