@@ -51,14 +51,17 @@
     - name: get iv_id
       shell: |
         count=0
-        while [[ $summaries != *"class"* ]] && (( count <= 5 )); do
+        while [[ $summaries != *"class"* ]] && (( $count <= 5 )); do
           summaries=curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'
           sleep 1
-          (( count=count+1 ))
+          (( count=$count+1 ))
         done
-        if (( count > 5 ));then echo "failed to get summary"; exit 1;fi
+        if (( $count > 5 )); then 
+          echo "failed to get summary"
+          exit 1
+        fi
         echo $summaries
       register: sumoutput
       args:
