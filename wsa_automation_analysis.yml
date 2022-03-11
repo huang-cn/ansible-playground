@@ -18,15 +18,15 @@
 
     ## Set WSPASS in job template.  
   tasks:
-    - name: perform heapdump 
-      shell:
-        cmd: |
-          # curl -v -k -H "Content-Type: application/json" \
-            -H "Authorization: Bearer {{ WH_TOKEN }}" \
-            -d '{"issue": { "type": "issue", "state": "OPEN", "id":"'{{ APPLICATION_SERVER_FQDN }}'", "link": "https://ibm.com", "customPayloads": { "custom:PID": ["'{{ CUSTOM_PID }}'"] }, "fqdn":"'{{ APPLICATION_SERVER_FQDN }}'" } }' \
-            {{ MEMLEAK_URL }}
-      args:
-        executable: /bin/bash
+#    - name: perform heapdump 
+#      shell:
+#        cmd: |
+#          curl -v -k -H "Content-Type: application/json" \
+#            -H "Authorization: Bearer {{ WH_TOKEN }}" \
+#            -d '{"issue": { "type": "issue", "state": "OPEN", "id":"'{{ APPLICATION_SERVER_FQDN }}'", "link": "https://ibm.com", "customPayloads": { "custom:PID": ["'{{ CUSTOM_PID }}'"] }, "fqdn":"'{{ APPLICATION_SERVER_FQDN }}'" } }' \
+#            {{ MEMLEAK_URL }}
+#      args:
+#        executable: /bin/bash
 
 - name: get-investigation-id 
   hosts: ws_host
@@ -36,9 +36,9 @@
       shell:
         cmd: |
           sleep 2
-          # curl -v -k -H "Content-Type: application/json" \
+          curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
-            {{ INVESTIGATION_URL }} | jq '.results[0].id' 
+            {{ INVESTIGATION_URL }} | jq '.results[0].id' > /dev/null
           echo "0f5382dc-3e98-49d8-beae-831795630b7e"
       register: output
       args:
