@@ -60,9 +60,10 @@
         done
         if (( $count > 5 )); then 
           echo "failed to get summary"
-          exit 1
+        else
+          echo $summaries
         fi
-        echo $summaries
+        
       register: sumoutput
       args:
         executable: /bin/bash
