@@ -43,7 +43,7 @@
       args:
         executable: /bin/bash
       register: output
-- set_fact: IV_ID="{{ output.stdout }}"
+    - set_fact: IV_ID="{{ output.stdout }}"
 
 - name: get-result 
   hosts: ws_host
