@@ -40,9 +40,9 @@
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }} | jq '.results[0].id' 
           echo "0f5382dc-3e98-49d8-beae-831795630b7e"
+      register: output
       args:
         executable: /bin/bash
-      register: output
     - set_fact: IV_ID="{{ output.stdout }}"
 
 - name: get-result 
