@@ -35,9 +35,9 @@
     - name: get iv_id
       shell: |
         sleep 2
-        iv_id=curl -v -k -H "Content-Type: application/json" \
+        iv_id=$(curl -v -k -H "Content-Type: application/json" \
           -H "Authorization: Bearer {{ IV_TOKEN }}" \
-          {{ INVESTIGATION_URL }} | jq '.results[0].id'
+          {{ INVESTIGATION_URL }} | jq '.results[0].id')
         echo $iv_id | tr -d '"'
       register: output
       args:
@@ -52,9 +52,9 @@
       shell: |
         count=0
         while [[ $summaries != *"class"* ]] && (( count <= 5 )); do
-          summaries=curl -v -k -H "Content-Type: application/json" \
+          summaries=$(curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
-            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'
+            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries')
           sleep 1
           (( count=count+1 ))
         done
