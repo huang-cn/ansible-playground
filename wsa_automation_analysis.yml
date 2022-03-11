@@ -57,8 +57,10 @@
           sleep 1
         done
         echo $summaries
-      register: output
+      register: sumoutput
       args:
         executable: /bin/bash
+
+    - name: Display Summaries
       ansible.builtin.debug:
-        msg: "{{ output.stdout }}"
+        msg: "{{ sumoutput.stdout }}"
