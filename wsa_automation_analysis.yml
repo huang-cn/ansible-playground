@@ -33,13 +33,12 @@
   gather_facts: no
   tasks:
     - name: get iv_id
-      shell:
-        cmd: |
-          sleep 2
-          curl -v -k -H "Content-Type: application/json" \
-            -H "Authorization: Bearer {{ IV_TOKEN }}" \
-            {{ INVESTIGATION_URL }} | jq '.results[0].id' > /dev/null
-          echo "0f5382dc-3e98-49d8-beae-831795630b7e"
+      shell: |
+        sleep 2
+        curl -v -k -H "Content-Type: application/json" \
+          -H "Authorization: Bearer {{ IV_TOKEN }}" \
+          {{ INVESTIGATION_URL }} | jq '.results[0].id' > /dev/null
+        echo "0f5382dc-3e98-49d8-beae-831795630b7e"
       register: output
       args:
         executable: /bin/bash
@@ -50,15 +49,14 @@
   gather_facts: no
   tasks:
     - name: get iv_id
-      shell:
-        cmd: |
-          while [[ "$summaries" != *"class"* ]]; do
-            summaries=`curl -v -k -H "Content-Type: application/json" \
-              -H "Authorization: Bearer {{ IV_TOKEN }}" \
-              {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'`
-            sleep 1
-          done
-          echo $summaries
+      shell: |
+        while [[ "$summaries" != *"class"* ]]; do
+          summaries=`curl -v -k -H "Content-Type: application/json" \
+            -H "Authorization: Bearer {{ IV_TOKEN }}" \
+            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'`
+          sleep 1
+        done
+        echo $summaries
       register: output
       args:
         executable: /bin/bash
