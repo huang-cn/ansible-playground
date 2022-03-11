@@ -58,7 +58,7 @@
               {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'`
             sleep 1
           done
+      register: output
       args:
         executable: /bin/bash
-  register: output
   msg: output.stdout
