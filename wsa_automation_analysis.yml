@@ -37,8 +37,7 @@
         sleep 2
         curl -v -k -H "Content-Type: application/json" \
           -H "Authorization: Bearer {{ IV_TOKEN }}" \
-          {{ INVESTIGATION_URL }} | jq '.results[0].id' > /dev/null
-        echo "0f5382dc-3e98-49d8-beae-831795630b7e"
+          {{ INVESTIGATION_URL }} | jq '.results[0].id'
       register: output
       args:
         executable: /bin/bash
@@ -51,14 +50,14 @@
     - name: get iv_id
       shell: |
         count=0
-        while [[ $summaries != *"class"* ]] && (( $count <= 5 )); do
+        while [[ $summaries != *"class"* ]] && (( count <= 5 )); do
           summaries=curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'
           sleep 1
           (( count=count+1 ))
         done
-        if (( $count > 5 )); then 
+        if (( count > 5 )); then 
           echo "failed to get summary"
         else
           echo $summaries
