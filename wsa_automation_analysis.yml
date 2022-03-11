@@ -50,7 +50,7 @@
   tasks:
     - name: get iv_id
       shell: |
-        while [ $summaries ] != *"class"* ]]; do
+        while [ $summaries != *"class"* ]; do
           summaries=`curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'`
