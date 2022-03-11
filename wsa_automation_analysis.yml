@@ -1,0 +1,66 @@
+---
+- set_fact: MEMLEAK_URL=https://cpd-wasautomation.apps.don-wsa-130rc3.cp.fyre.ibm.com/websphereauto/health/webhooks/instana/memleak
+- set_fact: INVESTIGATION_URL=https://wsa-health-apis-wasautomation.apps.don-wsa-130rc3.cp.fyre.ibm.com/investigations
+- set_fact: APPLICATION_SERVER_FQDN=testapp.wsatest.svc.cluster.local
+- set_fact: CUSTOM_PID=34
+- set_fact: WH_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6InlwVUNyMjVyU1NiQmdYWjR1Wk81S3gycW5MaDlhV3VGVE9DTGFaVmJzaGMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ3YXNhdXRvbWF0aW9uIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6IndzYS1oZWFsdGgtd2ViaG9va3MtYXBpcy1zYS10b2tlbi1xaHN0NiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2Y2Q3N2FjNS00MTI0LTQ2NWItYTkwMy00ZmZjNTliMjc5MDIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6d2FzYXV0b21hdGlvbjp3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EifQ.ez5TH1PjM_z-GT31KiA1evKBl8WUFXJ5lEiT_7uDSVv_YdgNrlg4a9NJEL-dRmkqWZVsaomHJQi1xykgA5ROxZ9z7OQBy3tDGyzZkRJPFLUofibePFztuerXoCb-N2npAGixVoja6LaByOLrQ1VuiJdSYBPDxZuztCuUsqMzfKAlghx0DJJbG0grvQWYYKrFGKb1_H8o1DdVyv05KYLa8WQtP9wzBwbxhT-rnZp4TSpoEV0feEsVOsEafpY-oTvc0sVfrQ01bgLT2mRLrHV4V1OXlDDui0rb9hFkpB7-Mk_Q32VbB1EXi4qxFk5brmVijncpj62Vg8sT21aBLP_juIcEnW_G2IqCI5Vz01TVchlt_RzkVQj6k4kYSwyiQMOMEb3ZcfrxQjoqnNgw95XZXWLddcID-ilb261TGDuVxlDuMviKRgbXd5VqJTow4O-F7wuifMuj4ug2h9ZJ1jGdoY8Zf2AwLqKSbVrOCnBY3h5EURhjkVLb52MNXVovcTDsuDdpso0yadwn3gEHzFl5WNWwEnqoUgH9dfxwhrLLrHr06t9ms3-cIMHln6yPeLt0x3GTPWGwA6BYNituZjVn83Q9PtnR5Na_dGbRlL00PRRvZJpPkJDlRcrHtGMK85lA_NBCiIrSMOeYX8cJBQGtsss8u-WaE-E73_C3Y5PAtog
+
+- name: Websphere Heap Dump 
+  hosts: ws_host
+  gather_facts: no
+  vars:
+    #- WH_TOKEN: eyJhbGciOiJSUzI1NiIsImtpZCI6ImZLQW9adThpMURaSHNGMkU4WW41OFNrWFlfZVdlYzJZWnlHZUw4UjNOTVEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ3YXNhdXRvbWF0aW9uIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6IndzYS1oZWFsdGgtd2ViaG9va3MtYXBpcy1zYS10b2tlbi1xN252NCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI3ODgzNjA1Yi1hY2Q0LTQyMzItOTMxNi1iYjlhZGMzY2NiOTMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6d2FzYXV0b21hdGlvbjp3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EifQ.G8RNtlo5TuLPab_vOnawoHWEPzEKjkEhLxI-FjcPI5ZItIgMG69My3T2b5VyfLy1xiwakUylBIGvOUnmjj2EhNT_HHzT8w8_x5OYY6aQNMZIQs9SFQ3xiQujbwsigjNqiivDfulrWMgw5Ac0LyAhYLDdCW9mKetqJzAZ2ziUGpFbWpNZhlZdct3WgOeNe3bK-t7Zw3SsNygjQbHEoVGxab83j1vdTkY5kdFJzDrXqMwAHtPsMp6bzO6DuhLJy_kw9DGCY6QVVgv2HgjRRMeqLND6EXkvpxyVM6n2gmH_x67IE5rsl_We-01yvPpM1YGVqxasOuShoditbwHiK3PIouT0lU9ILVCY5aBu6jPhGWEsj_BJFxVeOqLo6dLuT1MOUAjGOlul_VWQDVKjTzyxzaiz0KR_0go4HvQMl-RWwvRmraJJW5o7aENKkIpQdcMtX3NO5uv0NZxc3bTn9FWMPPvdOFOpc96UyYMHMIrOFdqDo4pynY1YLufKf-QZsnNpEQSj2HrQsusjb_0XNyW-DFS_YfFPNNcgeC0iNFtJtpHpTP_pN_lOSpsaba1tCsptyKzFxChlQqRpSEGFqRLlE-ScAKVtRBcR51J3g-2KR69WpIs1kIc9iwJPAl9Y8BogrD2eeFHdHNYUGOM4VjnNeEs_FO7FWd7dX9klxCBqigg
+    #- IV_TOKEN: eyJhbGciOiJSUzI1NiIsImtpZCI6ImZLQW9adThpMURaSHNGMkU4WW41OFNrWFlfZVdlYzJZWnlHZUw4UjNOTVEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ3YXNhdXRvbWF0aW9uIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6IndzYS1oZWFsdGgtYW5hbHlzaXMtbWFuYWdlci1zYS10b2tlbi00dzltcCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ3c2EtaGVhbHRoLWFuYWx5c2lzLW1hbmFnZXItc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIyYWUzY2U2Zi04ZTMwLTRlMmEtOTZlZS1mOTcxYjExZGI1ZDEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6d2FzYXV0b21hdGlvbjp3c2EtaGVhbHRoLWFuYWx5c2lzLW1hbmFnZXItc2EifQ.Eul8HhqLi0aXftiBJ081o2MP864ttKLKfNEiu4cIEI4vXKmt6WmuS2Wv6832mdWxRnnhTAPUjkmOJ4MNcEk9K8JgsLIG0svyIt0zsz4UFTFa9R0WaQs436pNRt98eq-DApBOV9jkOnwf4SDdZG2Ok4yeoAwr-C_PJkDheu_Vdz6g_4CM3qSBokctaNjUY6yP0Lg5eaXk6GBIiVqAkynrlIOdwS6QyT_4OmKwpqGRFhwc6Xmoii1V_dj4zihBOwrrrYxx94mwpOnvt6h5Ztfm7PFzNI49pc3TwgBY8tgboHtYy_m2y_rj54GCXeGw5dyfyvCM9NC_upJBTSaZTs-XJI5hARiRdm0sHuiwJW3fpr-z1iJi6Cdx7M0_3jxaxdQp7gwFhlj8geasQe2oWezndonoIDQPEEA6_rRtjBlfv-LD-X7kHy0FLQz1rtTZ28XZRULOHWlJqdhMrDsWixs8E6Qgl6qlKUVjvhj9_QoENE56U4CKdy0MT0V0i44_OVp2Y-vqjDAB190vbpKUn8n8qcpKNthwUmafKnYCQC1pTToqF-pnQ6uORffUNVvZPnMKCSC6kpmF6pJcSak5YxlooYNZ7cvh0FeGtVmteuioEFNpN6tp2FHP4F_637CZjZMUPzNbnijQAJngld5_4-yJMgdyt_PinGiGRPWTx28i8qw
+    #- APPLICATION_SERVER_FQDN: chukkar1.fyre.ibm.com
+    #- CUSTOM_PID: 34
+    #- MEMLEAK_URL: https://cpd-wasautomation.apps.deadest.cp.fyre.ibm.com/websphereauto/health/webhooks/instana/memleak
+    #- INVESTIGATION_URL: https://wsa-health-apis-wasautomation.apps.deadest.cp.fyre.ibm.com/investigations
+
+    ## Set WSPASS in job template.  
+  tasks:
+    - name: perform heapdump 
+      shell:
+        cmd: |
+          # curl -v -k -H "Content-Type: application/json" \
+            -H "Authorization: Bearer {{ WH_TOKEN }}" \
+            -d '{"issue": { "type": "issue", "state": "OPEN", "id":"'{{ APPLICATION_SERVER_FQDN }}'", "link": "https://ibm.com", "customPayloads": { "custom:PID": ["'{{ CUSTOM_PID }}'"] }, "fqdn":"'{{ APPLICATION_SERVER_FQDN }}'" } }' \
+            {{ MEMLEAK_URL }}
+      args:
+        executable: /bin/bash
+
+- name: get-investigation-id 
+  hosts: ws_host
+  gather_facts: no
+  tasks:
+    - name: get iv_id
+      shell:
+        cmd: |
+          sleep 2
+          # curl -v -k -H "Content-Type: application/json" \
+            -H "Authorization: Bearer {{ IV_TOKEN }}" \
+            {{ INVESTIGATION_URL }} | jq '.results[0].id' 
+          echo "0f5382dc-3e98-49d8-beae-831795630b7e"
+      args:
+        executable: /bin/bash
+      register: output
+- set_fact: IV_ID=output.stdout
+
+- name: get-result 
+  hosts: ws_host
+  gather_facts: no
+  tasks:
+    - name: get iv_id
+      shell:
+        cmd: |
+          while [[ "$summaris" != *"class"* ]]; do
+            summaris=`curl -v -k -H "Content-Type: application/json" \
+              -H "Authorization: Bearer {{ IV_TOKEN }}" \
+              {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries'`
+            sleep 1
+          done
+      args:
+        executable: /bin/bash
+  register: output
+  msg: output.stdout
+
+
