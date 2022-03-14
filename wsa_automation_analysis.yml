@@ -12,7 +12,7 @@
     - set_fact: WH_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6InlwVUNyMjVyU1NiQmdYWjR1Wk81S3gycW5MaDlhV3VGVE9DTGFaVmJzaGMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ3YXNhdXRvbWF0aW9uIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6IndzYS1oZWFsdGgtd2ViaG9va3MtYXBpcy1zYS10b2tlbi1xaHN0NiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJ3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI2Y2Q3N2FjNS00MTI0LTQ2NWItYTkwMy00ZmZjNTliMjc5MDIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6d2FzYXV0b21hdGlvbjp3c2EtaGVhbHRoLXdlYmhvb2tzLWFwaXMtc2EifQ.ez5TH1PjM_z-GT31KiA1evKBl8WUFXJ5lEiT_7uDSVv_YdgNrlg4a9NJEL-dRmkqWZVsaomHJQi1xykgA5ROxZ9z7OQBy3tDGyzZkRJPFLUofibePFztuerXoCb-N2npAGixVoja6LaByOLrQ1VuiJdSYBPDxZuztCuUsqMzfKAlghx0DJJbG0grvQWYYKrFGKb1_H8o1DdVyv05KYLa8WQtP9wzBwbxhT-rnZp4TSpoEV0feEsVOsEafpY-oTvc0sVfrQ01bgLT2mRLrHV4V1OXlDDui0rb9hFkpB7-Mk_Q32VbB1EXi4qxFk5brmVijncpj62Vg8sT21aBLP_juIcEnW_G2IqCI5Vz01TVchlt_RzkVQj6k4kYSwyiQMOMEb3ZcfrxQjoqnNgw95XZXWLddcID-ilb261TGDuVxlDuMviKRgbXd5VqJTow4O-F7wuifMuj4ug2h9ZJ1jGdoY8Zf2AwLqKSbVrOCnBY3h5EURhjkVLb52MNXVovcTDsuDdpso0yadwn3gEHzFl5WNWwEnqoUgH9dfxwhrLLrHr06t9ms3-cIMHln6yPeLt0x3GTPWGwA6BYNituZjVn83Q9PtnR5Na_dGbRlL00PRRvZJpPkJDlRcrHtGMK85lA_NBCiIrSMOeYX8cJBQGtsss8u-WaE-E73_C3Y5PAtog
     - name: query investigation URL 
       shell: |
-        curl -v -k -H "Content-Type: application/json" \
+        curl -v -k -f -H "Content-Type: application/json" \
           -H "Authorization: Bearer {{ IV_TOKEN }}" \
           {{ INVESTIGATION_URL }}
       args:
