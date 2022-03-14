@@ -26,7 +26,7 @@
   tasks:
     - name: create ticket 
       shell: |
-        curl -v -k -H "Content-Type: application/json" \
+        curl -v -k -f -H "Content-Type: application/json" \
           -H "Authorization: Bearer {{ WH_TOKEN }}" \
           -d '{"issue": { "type": "issue", "state": "OPEN", "id":"'{{ APPLICATION_SERVER_FQDN }}'", "link": "https://ibm.com", "customPayloads": { "custom:PID": ["'{{ CUSTOM_PID }}'"] }, "fqdn":"'{{ APPLICATION_SERVER_FQDN }}'" } }' \
           {{ MEMLEAK_URL }}
@@ -40,7 +40,7 @@
     - name: get iv_id
       shell: |
         sleep 5
-        iv_id=$(curl -v -k -H "Content-Type: application/json" \
+        iv_id=$(curl -v -k -f -H "Content-Type: application/json" \
           -H "Authorization: Bearer {{ IV_TOKEN }}" \
           {{ INVESTIGATION_URL }} | jq '.results[0].id')
         echo $iv_id | tr -d '"'
