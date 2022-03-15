@@ -74,11 +74,12 @@
           echo $summaries | tr -d '"'
           echo $files_info | tr -d '"'
         fi
-        
       register: sumoutput
       args:
         executable: /bin/bash
 
     - name: Display Summaries
+      vars:
+        msg: {{ sumoutput.stdout }}
       ansible.builtin.debug:
-        msg: "{{ sumoutput.stdout }}"
+        msg: "{{ msg.split('\n') }}"
