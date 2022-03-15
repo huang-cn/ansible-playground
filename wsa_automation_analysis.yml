@@ -61,13 +61,18 @@
           summaries=$(curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].summaries')
+          files_info=$(curl -v -k -H "Content-Type: application/json" \
+            -H "Authorization: Bearer {{ IV_TOKEN }}" \
+            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].files')
           sleep 1
           (( count=count+1 ))
         done
         if (( count > wait_time )); then 
           echo "failed to get summary"
         else
+          echo "Websphere Memory leak investigation Summaries:"
           echo $summaries
+          echo $files_info
         fi
         
       register: sumoutput
