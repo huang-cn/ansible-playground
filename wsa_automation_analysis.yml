@@ -79,7 +79,5 @@
         executable: /bin/bash
 
     - name: Display Summaries
-      vars:
-        msg: {{ sumoutput.stdout }}
       ansible.builtin.debug:
-        msg: "{{ msg.split('\n') }}"
+        msg: "{{ sumoutput.stdout }}"
