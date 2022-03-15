@@ -12,5 +12,5 @@
 
     - name: Display Results
       ansible.builtin.debug:
-        msg: "{{ output.stdout }}"
+        msg: "Instana Websphere Event sent to AIOPS."
 
