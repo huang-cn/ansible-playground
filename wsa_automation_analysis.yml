@@ -71,8 +71,8 @@
           echo "failed to get summary"
         else
           echo "Websphere Memory leak investigation Summaries:"
-          echo $summaries
-          echo $files_info
+          echo $summaries | tr -d '"'
+          echo $files_info | tr -d '"'
         fi
         
       register: sumoutput
