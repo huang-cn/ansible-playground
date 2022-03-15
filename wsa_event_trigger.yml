@@ -1,0 +1,16 @@
+---
+- name: Trigger Katamari Aiops Websphere event
+  hosts: ws_host
+  gather_facts: no
+  tasks:
+    - name: generating event 
+      shell: /demo/send_event.sh
+      args:
+        executable: /bin/bash
+      register: output
+      failed_when: output.rc != 0
+
+    - name: Display Results
+      ansible.builtin.debug:
+        msg: "{{ output.stdout }}"
+
