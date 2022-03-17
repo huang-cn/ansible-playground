@@ -81,3 +81,8 @@
     - name: Display Summaries
       ansible.builtin.debug:
         msg: "{{ sumoutput.stdout }}"
+
+    - name: Open Github issue 
+      shell: "/demo/crt_git_issue.sh \"{{ sumoutput.stdout }}\" > /dev/null"
+      register: output
+      failed_when: output.rc != 0
