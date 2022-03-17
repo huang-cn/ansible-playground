@@ -53,7 +53,7 @@
   hosts: ws_host
   gather_facts: no
   tasks:
-    - name: get iv_id
+    - name: get summaries
       shell: |
         wait_time=300
         count=0
@@ -69,6 +69,7 @@
         done
         if (( count > wait_time )); then 
           echo "failed to get summary"
+          exit 1
         else
           echo "Websphere Memory leak investigation Summaries:\n\n"
           echo $summaries | tr -d '"'
