@@ -89,10 +89,10 @@
       shell: |
         step_id=$(curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
-            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].id' )
+            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].id' | tr -d '"')
         file_name=$(curl -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
-            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].files[0].fileName')
+            {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps | jq '.[2].files[0].fileName' | tr -d '"')
         curl -o {{ HEAPFILE_LOCATION }}/$file_name -v -k -H "Content-Type: application/json" \
             -H "Authorization: Bearer {{ IV_TOKEN }}" \
             {{ INVESTIGATION_URL }}/{{ IV_ID }}/steps/${step_id}/files/$file_name > /dev/null
@@ -101,7 +101,7 @@
       args:
         executable: /bin/bash
     - set_fact: IV_FILENAME="{{ filename_output.stdout }}"
-    - set_fact: GIT_MSG="{{ sumoutput.stdout + '\n\n' + 'Download full analysis file:' + ' '+ HEAPFILE_URL + '/' + IV_FILENAME }}"
+    - set_fact: GIT_MSG="{{ sumoutput.stdout + '\\n\\n' + 'Download full analysis file:' + ' '+ HEAPFILE_URL + '/' + IV_FILENAME }}"
 
     - name: Open Github issue 
       shell: "/demo/crt_git_issue.sh \"{{ GIT_MSG }}\" > /dev/null"
